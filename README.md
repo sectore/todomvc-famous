@@ -10,7 +10,7 @@ Unofficial part of <a href="http://todomvc.com">TodoMVC</a> built with <a href="
 
 ##Architecture
  
-The app is structured using a simple MV* architecture, but without any MV* frameworks and without any DOM library 
+The application is structured using a simple MV* architecture, but without any MV* frameworks and without any DOM library 
 such as jQuery. Just "pure" JavaScript.
 
 The communication between all actors (views, models etc.) is based on a simple Pub/Sub (or Observer) pattern using 
@@ -28,7 +28,7 @@ bower install
 
 ##Build
 
-The app is built using [webpack](http://webpack.github.io/).
+The application is built by using [webpack](http://webpack.github.io/).
 
 
 ### Development
@@ -61,8 +61,8 @@ Any contribution are very welcome! Let's change this unofficial part of TodoMVC 
 
 ## Credits:
 
-- [famous-webpack-seed](https://github.com/AdrianRossouw/famous-webpack-seed) by (AdrianRossouw) [https://github.com/AdrianRossouw/f] (Seed project for running webpack + Famo.us) 
-- [famous-webpack-seed](https://github.com/markmarijnissen/famous-webpack-seed) by (markmarijnissen) [https://github.com/markmarijnissen] (Another - more complex - seed project for running webpack + Famo.us)
+- [famous-webpack-seed](https://github.com/AdrianRossouw/famous-webpack-seed) (by [AdrianRossouw](https://github.com/AdrianRossouw/)): Seed project for running webpack + Famo.us 
+- [famous-webpack-seed](https://github.com/markmarijnissen/famous-webpack-seed) (by [markmarijnissen](https://github.com/markmarijnissen)): Another - more complex - seed project for running webpack + Famo.us
 
 
 ## Changelog
