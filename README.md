@@ -45,7 +45,7 @@ Open [Chrome](https://www.google.com/chrome/browser/):
 
 
 
-#### Production
+### Production
 
 For building a production (minification) version run:
 
@@ -61,13 +61,13 @@ Any contribution are very welcome! Let's change this unofficial part of TodoMVC 
 
 ## Credits:
 
-- [famous-webpack-seed](https://github.com/AdrianRossouw/famous-webpack-seed) by (AdrianRossouw)[https://github.com/AdrianRossouw/f] (Seed project for running webpack + Famo.us) 
-- [famous-webpack-seed](https://github.com/markmarijnissen/famous-webpack-seed) by (markmarijnissen)[https://github.com/markmarijnissen] (Another - more complex - seed project for running webpack + Famo.us)
+- [famous-webpack-seed](https://github.com/AdrianRossouw/famous-webpack-seed) by (AdrianRossouw) [https://github.com/AdrianRossouw/f] (Seed project for running webpack + Famo.us) 
+- [famous-webpack-seed](https://github.com/markmarijnissen/famous-webpack-seed) by (markmarijnissen) [https://github.com/markmarijnissen] (Another - more complex - seed project for running webpack + Famo.us)
 
 
 ## Changelog
 
-[Changelog](./CHANGELOG.md)
+Check [CHANGELOG.md](./CHANGELOG.md)
 
 
 ## License
