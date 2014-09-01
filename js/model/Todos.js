@@ -29,8 +29,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
     },
 
     TODO_ADDED: 'todos:todo-added',
-    add: function (text) {
-      var todo = new Todo(text);
+    add: function (todo) {
       todos.unshift(todo);
       this.emit(this.UPDATED, {
         kind: this.TODO_ADDED,
@@ -40,11 +39,10 @@ var AppDispatcher = require('./../event/AppDispatcher'),
 
     TODO_UPDATED: 'todos:todo-updated',
     update: function (event) {
-      var self = this;
       todos.forEach(function (todo, index) {
         if (todo.id === event.id) {
           todo.update(event.label);
-          self.emit(this.UPDATED, {
+          this.emit(this.UPDATED, {
             kind: this.TODO_UPDATED,
             items: [todo]
           });
@@ -75,7 +73,6 @@ var AppDispatcher = require('./../event/AppDispatcher'),
       todosCompleted.forEach(function (todo) {
         this.remove(todo.id, true);
       }.bind(this));
-
       this.emit(this.UPDATED, {
         kind: this.TODO_REMOVED,
         items: todosCompleted
@@ -191,8 +188,16 @@ var AppDispatcher = require('./../event/AppDispatcher'),
       return this.getNumberOfCompleted() === this.getNumberOfAll();
     },
 
-    hasTodos: function(){
+    hasTodos: function () {
       return this.getAll() && this.getNumberOfAll() > 0
+    },
+
+    /**
+     * Helper method to clear todo list
+     */
+    emptyTodos: function () {
+      // empty todos
+      todos = [];
     }
 
   };
