@@ -8,7 +8,13 @@ describe('Todo', function () {
     expect(todo.label).to.equal(label);
   })
 
-  it('should have an id', function () {
+
+  it('should have an empty label by default', function () {
+    var todo = new Todo();
+    expect(todo.label).to.be.equal('');
+  })
+
+  it('should have an id by default', function () {
     var todo = new Todo();
     expect(todo.id).to.not.be.undefined;
   })
