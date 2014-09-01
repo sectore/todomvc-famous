@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js --progress --colors --reload=localhost",
-    "prod": "webpack --minify --env=production --progress --colors"
+    "prod": "webpack --minify --env=production --progress --colors",
+    "test": "karma start karma-conf.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "author": "Jens Krause",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^1.9.1",
     "css-loader": "^0.7.1",
     "expose-loader": "^0.5.3",
     "famous": "^0.2.2",
@@ -25,8 +27,16 @@
     "file-loader": "^0.7.2",
     "glob": "^4.0.5",
     "html-loader": "^0.2.2",
+    "karma": "^0.12.23",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.1.9",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon": "^1.0.3",
+    "karma-webpack": "^1.2.2",
+    "mocha": "^1.21.4",
     "optimist": "^0.6.1",
     "script-loader": "^0.6.0",
+    "sinon": "^1.10.3",
     "style-loader": "^0.7.1",
     "url-loader": "^0.5.5",
     "webpack": "^1.4.0-beta1",
