@@ -9,6 +9,7 @@ var View = require('famous/core/View'),
   Easing = require('famous/transitions/Easing'),
   InputSurface = require('famous/surfaces/InputSurface'),
   Todos = require('../model/Todos'),
+  Todo = require('../model/Todo'),
   CheckBoxSurface = require('../component/CheckBoxSurface'),
   RenderController = require('famous/views/RenderController'),
 
@@ -74,9 +75,10 @@ var View = require('famous/core/View'),
 
     input.on('keydown', function (event) {
       if (event.keyCode == 13) {
-        var value = this.getValue();
-        if (value && value.length) {
-          AppDispatcher.emit(AppEvents.ADD_TODO, value);
+        var label = this.getValue();
+        if (label && label.length) {
+          var todo = new Todo(label);
+          AppDispatcher.emit(AppEvents.ADD_TODO, todo);
           this.setValue('');
         }
       }
