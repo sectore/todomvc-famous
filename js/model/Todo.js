@@ -5,7 +5,7 @@ var EventHandler = require('famous/core/EventHandler'),
 // ------------------------------------------------------------
 
 function Todo(label) {
-  this.label = label;
+  this.label = label || '';
   this.id = Util.createUUID();
   this.completed = false;
   this.outputEventHandler = new EventHandler();
