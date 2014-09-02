@@ -30,7 +30,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
 
     TODO_ADDED: 'todos:todo-added',
     add: function (todo) {
-      todos.unshift(todo);
+      todos.push(todo);
       this.emit(this.UPDATED, {
         kind: this.TODO_ADDED,
         items: [todo]
