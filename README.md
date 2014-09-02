@@ -55,6 +55,12 @@ For building a production (minification) version run:
 npm run prod
 ```
 
+## Unit tests
+
+```bash
+npm test
+```
+
 
 ## Contributors
 
