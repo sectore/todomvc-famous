@@ -38,14 +38,17 @@ var AppDispatcher = require('./../event/AppDispatcher'),
     },
 
     TODO_UPDATED: 'todos:todo-updated',
-    update: function (event) {
+    update: function (data) {
       todos.forEach(function (todo, index) {
-        if (todo.id === event.id) {
-          todo.update(event.label);
-          this.emit(this.UPDATED, {
-            kind: this.TODO_UPDATED,
-            items: [todo]
-          });
+        if (todo.id === data.id) {
+          var updated = todo.update(data.label);
+          if (updated) {
+            this.emit(this.UPDATED, {
+              kind: this.TODO_UPDATED,
+              items: [todo]
+            });
+          }
+
         }
       }.bind(this));
     },
@@ -123,12 +126,17 @@ var AppDispatcher = require('./../event/AppDispatcher'),
 
     UPDATED: 'todos:updated',
     setFilterState: function (state) {
-      this.filterState = state;
-      this.emit(this.UPDATED, {items: this.getTodos()});
+      if(this.getFilterState() !== state){
+        this.filterState = state;
+        this.emit(this.UPDATED, {items: this.getTodos()});
+        return true;
+      } else {
+        return false
+      }
     },
 
     getFilterState: function () {
-      var state = filterState || this.FILTER_NONE
+      var state = filterState || this.FILTER_NONE;
       return this.filterState;
     },
 
