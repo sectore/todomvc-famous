@@ -21,6 +21,9 @@ Todo.prototype.setCompleted = function (value) {
   if (this.completed !== value) {
     this.completed = value;
     this.emit(Todo.COMPLETED, this.completed);
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -29,6 +32,9 @@ Todo.prototype.update = function (value) {
   if (this.label !== value) {
     this.label = value;
     this.emit(Todo.UPDATED, this.label);
+    return true;
+  } else {
+    return false;
   }
 }
 
