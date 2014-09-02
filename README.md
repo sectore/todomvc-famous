@@ -1,5 +1,7 @@
 #TodoMVC + Famo.us
 
+[![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-url]][daviddm-image]
+
 Unofficial part of <a href="http://todomvc.com">TodoMVC</a> built with <a href="http://famo.us">Famo.us</a>.
 
 
@@ -73,3 +75,8 @@ Check [CHANGELOG.md](./CHANGELOG.md)
 ## License
 
 Copyright (c) 2014 Jens Krause. Licensed under the [MIT license](./LICENSE.md).
+
+[travis-url]: https://travis-ci.org/sectore/todomvc-famous
+[travis-image]: https://travis-ci.org/sectore/todomvc-famous.svg?branch=master
+[daviddm-url]: https://david-dm.org/sectore/todomvc-famous.svg?theme=shields.io
+[daviddm-image]: https://david-dm.org/sectore/todomvc-famous
