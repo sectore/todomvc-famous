@@ -96,7 +96,7 @@ var View = require('famous/core/View'),
 
   updateTodoList = function (todos) {
     var views = createTodoViewsFromTodos.call(this, todos);
-    this.todoViews = views;
+    this.todoViews = views.reverse();
     this.todoList.sequenceFrom(this.todoViews);
   },
 
