@@ -225,6 +225,169 @@ describe('Todos -> ', function () {
 
     })
 
+    it('should not have completed todos only', function () {
+      var result = Todos.allCompleted();
+      expect(result).to.be.false;
+    })
+
   })
 
+  describe('updating a todo', function () {
+
+    var spy;
+    var todo;
+    var data;
+
+    beforeEach(function () {
+      spy = sinon.spy()
+
+      todo = new Todo();
+      data = {
+        id: todo.id,
+        label: 'new label'
+      }
+      Todos.add(todo);
+      // adding listener
+      Todos.on(Todos.UPDATED, spy);
+    });
+
+    afterEach(function () {
+      Todos.off(Todos.UPDATED, spy);
+    });
+
+
+    it('should calling a registered event listener', function () {
+      Todos.update(data);
+      expect(spy.called).to.be.true;
+    })
+
+    it('should emit an event with a kind of TODO_UPDATED', function () {
+      Todos.update(data);
+      var event = spy.getCall(0).args[0];
+      expect(event.kind).to.be.equal(Todos.TODO_UPDATED);
+    })
+
+    it('should emit an event with updated todo', function () {
+      Todos.update(data);
+      var event = spy.getCall(0).args[0];
+      expect(event.items[0]).to.deep.equal(todo);
+    })
+  })
+
+  describe('handling of filter states -> ', function () {
+
+    var spy;
+
+    beforeEach(function () {
+      spy = sinon.spy()
+      // adding listener
+      Todos.on(Todos.UPDATED, spy);
+    });
+
+    afterEach(function () {
+      Todos.off(Todos.UPDATED, spy);
+      Todos.setFilterState(Todos.FILTER_NONE);
+    });
+
+
+    it('setting new filter state should calling a registered event listener', function () {
+      Todos.setFilterState(Todos.FILTER_COMPLETED);
+      expect(spy.called).to.be.true;
+    })
+
+    it('should emit an event with filtered todos', function () {
+      var todo = new Todo();
+      todo.setCompleted(true);
+      Todos.add(new Todo());
+      Todos.add(todo);
+      spy.reset();
+      Todos.setFilterState(Todos.FILTER_COMPLETED);
+      var event = spy.getCall(0).args[0];
+      expect(event.items.length).to.equal(1);
+      expect(event.items[0]).to.deep.equal(todo);
+    })
+
+    it('should return a list of active todos', function () {
+      var todo = new Todo();
+      todo.setCompleted(true);
+      Todos.add(todo);
+      Todos.add(new Todo());
+      Todos.add(new Todo());
+      Todos.setFilterState(Todos.FILTER_ACTIVE);
+      expect(Todos.getTodos().length).to.equal(2);
+    })
+
+    it('should return a list of completed todos', function () {
+      var todo = new Todo();
+      todo.setCompleted(true);
+      Todos.add(todo);
+      Todos.add(new Todo());
+      Todos.add(new Todo());
+      Todos.setFilterState(Todos.FILTER_COMPLETED);
+      expect(Todos.getTodos().length).to.equal(1);
+    })
+
+    it('getting filtered todos should return a list of all todos', function () {
+      Todos.add(new Todo());
+      Todos.add(new Todo());
+      Todos.add(new Todo());
+      Todos.setFilterState(Todos.FILTER_ALL);
+      expect(Todos.getTodos().length).to.equal(3);
+    })
+  })
+
+  describe('getting todos depending on its status ->', function () {
+    beforeEach(function () {
+      // adding 1 complete + 2 active todos
+      Todos.add(new Todo());
+      todoA = new Todo();
+      todoA.setCompleted(true);
+      Todos.add(todoA);
+      Todos.add(new Todo());
+    });
+
+    afterEach(function () {
+
+    });
+
+    it('it should return a list of active todos', function () {
+      var result = Todos.getActive();
+      expect(result).to.be.a('array');
+      expect(result.length).to.be.ok;
+    })
+
+    it('it should return the number of active todos', function () {
+      var result = Todos.getNumberOfActive();
+      expect(result).to.equal(2);
+    })
+
+    it('it should return a list of completed todos', function () {
+      var result = Todos.getCompleted();
+      expect(result).to.be.a('array');
+      expect(result.length).to.be.ok;
+    })
+
+    it('it should return the number of completed todos', function () {
+      var result = Todos.getNumberOfCompleted();
+      expect(result).to.equal(1);
+    })
+
+    it('it should return a list of all todos', function () {
+      var result = Todos.getAll();
+      expect(result).to.be.a('array');
+      expect(result.length).to.be.ok;
+    })
+
+
+    it('it should return the number of all todos', function () {
+      var result = Todos.getNumberOfAll();
+      expect(result).to.equal(3);
+    })
+
+  })
+
+  it('but it should have todos ', function () {
+    var result = Todos.hasTodos();
+    expect(result).to.be.false;
+  })
 });
