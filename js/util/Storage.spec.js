@@ -1,6 +1,6 @@
 describe('Storage -> ', function () {
 
-  var Storage = require('./storage');
+  var Storage = require('./Storage');
   var Todo = require('../model/Todo');
 
   describe('getting data ', function () {

@@ -1,7 +1,7 @@
 var AppDispatcher = require('./../event/AppDispatcher'),
   AppEvents = require('./../event/AppEvents'),
   Todo = require('./Todo'),
-  Storage = require('../util/storage'),
+  Storage = require('../util/Storage'),
   EventHandler = require('famous/core/EventHandler'),
   outputEventHandler = new EventHandler(),
   todos = Storage.get(),

@@ -2,7 +2,7 @@ describe('Todos -> ', function () {
 
   var Todos = require('./Todos');
   var Todo = require('./Todo');
-  var Storage = require('../util/storage');
+  var Storage = require('../util/Storage');
 
   beforeEach(function () {
 
