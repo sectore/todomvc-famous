@@ -2,6 +2,7 @@ describe('Todos -> ', function () {
 
   var Todos = require('./Todos');
   var Todo = require('./Todo');
+  var Storage = require('../util/storage');
 
   beforeEach(function () {
 
@@ -45,21 +46,29 @@ describe('Todos -> ', function () {
       expect(firstTodo).to.deep.equal(todo);
     })
 
-    it('adding a todo should calling a registered event listener', function () {
+    it('should calling a registered event listener', function () {
       Todos.add(new Todo());
       expect(spy.called).to.be.true;
     })
 
-    it('adding a todo should emit an event with a kind', function () {
+    it('should emit an event with a kind', function () {
       Todos.add(todo);
       var event = spy.getCall(0).args[0];
       expect(event.kind).to.be.equal(Todos.TODO_ADDED);
     })
 
-    it('adding a todo should emit an event with the new added todo', function () {
+    it('should emit an event with the new added todo', function () {
       Todos.add(todo);
       var event = spy.getCall(0).args[0];
       expect(event.items[0]).to.deep.equal(todo);
+    })
+
+    it('should store all todos', function () {
+      var spy = sinon.spy(Storage, 'set');
+      Todos.add(todo);
+      var todos = Todos.getAll();
+      expect(spy.calledWithExactly(todos)).to.be.true;
+      spy.restore();
     })
 
   })
@@ -100,6 +109,14 @@ describe('Todos -> ', function () {
       Todos.remove(todo.id);
       var event = spy.getCall(0).args[0];
       expect(event.items[0]).to.deep.equal(todo);
+    })
+
+    it('should store updated todo list', function () {
+      var spy = sinon.spy(Storage, 'set');
+      Todos.remove(todo.id);
+      var todos = Todos.getAll();
+      expect(spy.calledWithExactly(todos)).to.be.true;
+      spy.restore();
     })
 
   });
@@ -155,6 +172,14 @@ describe('Todos -> ', function () {
         var event = spy.getCall(0).args[0];
         expect(event.items[0]).to.deep.equal(todoA);
       })
+
+      it('should store updated todo list', function () {
+        var spy = sinon.spy(Storage, 'set');
+        Todos.toggleCompleted(todoA.id);
+        var todos = Todos.getAll();
+        expect(spy.calledWithExactly(todos)).to.be.true;
+        spy.restore();
+      })
     })
 
     describe('toggling handling of completed todos ->', function () {
@@ -196,6 +221,14 @@ describe('Todos -> ', function () {
         var event = spy.getCall(0).args[0];
         expect(event.items.length).to.equal(Todos.getCompleted().length);
       })
+
+      it('should store updated todo list', function () {
+        var spy = sinon.spy(Storage, 'set');
+        Todos.toggleAllCompleted();
+        var todos = Todos.getAll();
+        expect(spy.calledWithExactly(todos)).to.be.true;
+        spy.restore();
+      })
     })
 
     describe('remove handling of completed todos', function () {
@@ -221,6 +254,14 @@ describe('Todos -> ', function () {
         Todos.removeAllCompleted();
         var event = spy.getCall(0).args[0];
         expect(event.items.length).to.equal(2);
+      })
+
+      it('should store updated todo list', function () {
+        var spy = sinon.spy(Storage, 'set');
+        Todos.removeAllCompleted();
+        var todos = Todos.getAll();
+        expect(spy.calledWithExactly(todos)).to.be.true;
+        spy.restore();
       })
 
     })
@@ -272,9 +313,17 @@ describe('Todos -> ', function () {
       var event = spy.getCall(0).args[0];
       expect(event.items[0]).to.deep.equal(todo);
     })
+
+    it('should store updated todo list', function () {
+      var spy = sinon.spy(Storage, 'set');
+      Todos.update(data);
+      var todos = Todos.getAll();
+      expect(spy.calledWithExactly(todos)).to.be.true;
+      spy.restore();
+    })
   })
 
-  describe('handling of filter states -> ', function () {
+  describe('handling of filtering states -> ', function () {
 
     var spy;
 

@@ -1,9 +1,10 @@
 var AppDispatcher = require('./../event/AppDispatcher'),
   AppEvents = require('./../event/AppEvents'),
   Todo = require('./Todo'),
+  Storage = require('../util/storage'),
   EventHandler = require('famous/core/EventHandler'),
   outputEventHandler = new EventHandler(),
-  todos = [],
+  todos = Storage.get(),
   filterState,
 
 
@@ -31,6 +32,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
     TODO_ADDED: 'todos:todo-added',
     add: function (todo) {
       todos.push(todo);
+      this.store();
       this.emit(this.UPDATED, {
         kind: this.TODO_ADDED,
         items: [todo]
@@ -43,6 +45,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
         if (todo.id === data.id) {
           var updated = todo.update(data.label);
           if (updated) {
+            this.store();
             this.emit(this.UPDATED, {
               kind: this.TODO_UPDATED,
               items: [todo]
@@ -60,6 +63,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
         todo = todos[i];
         if (todo.id === id) {
           todos.splice(i, 1);
+          this.store();
           if (!silent) {
             this.emit(this.UPDATED, {
               kind: this.TODO_REMOVED,
@@ -76,10 +80,15 @@ var AppDispatcher = require('./../event/AppDispatcher'),
       todosCompleted.forEach(function (todo) {
         this.remove(todo.id, true);
       }.bind(this));
+      this.store();
       this.emit(this.UPDATED, {
         kind: this.TODO_REMOVED,
         items: todosCompleted
       });
+    },
+
+    store: function(){
+      Storage.set(todos);
     },
 
     toggleCompleted: function (id) {
@@ -88,6 +97,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
         todo = todos[i];
         if (todo.id === id) {
           todo.toggleComplete();
+          this.store();
           this.emit(this.UPDATED, {
             kind: this.COMPLETE_TOGGLED,
             items: [todo]
@@ -103,6 +113,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
       todos.forEach(function (todo) {
         todo.setCompleted(completed);
       });
+      this.store();
       this.emit(this.UPDATED, {
         kind: this.COMPLETE_TOGGLED,
         items: todos
@@ -206,6 +217,7 @@ var AppDispatcher = require('./../event/AppDispatcher'),
     emptyTodos: function () {
       // empty todos
       todos = [];
+      this.store();
     }
 
   };

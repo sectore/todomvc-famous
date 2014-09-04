@@ -77,7 +77,8 @@ var View = require('famous/core/View'),
       if (event.keyCode == 13) {
         var label = this.getValue();
         if (label && label.length) {
-          var todo = new Todo(label);
+          var options = {label: label};
+          var todo = new Todo(options);
           AppDispatcher.emit(AppEvents.ADD_TODO, todo);
           this.setValue('');
         }

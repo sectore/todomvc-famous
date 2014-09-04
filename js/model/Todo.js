@@ -1,13 +1,13 @@
 var EventHandler = require('famous/core/EventHandler'),
-  Util = require('../util/util');
+  Util = require('../util/Util');
 
 // constructor
 // ------------------------------------------------------------
 
-function Todo(label) {
-  this.label = label || '';
-  this.id = Util.createUUID();
-  this.completed = false;
+function Todo(options) {
+  this.label = options && options.label ? options.label : '';
+  this.id = options && options.id ? options.id : Util.createUUID();
+  this.completed = options && options.completed ? options.completed : false;
   this.outputEventHandler = new EventHandler();
 }
 
@@ -36,6 +36,18 @@ Todo.prototype.update = function (value) {
   } else {
     return false;
   }
+}
+
+Todo.prototype.toJSON = function (value) {
+  return {
+    id: this.id,
+    label: this.label,
+    completed: this.completed
+  }
+}
+
+Todo.fromJSON = function(json){
+  return new Todo(json);
 }
 
 // event handling

@@ -4,7 +4,7 @@ describe('Todo', function () {
 
   it('should assign a label', function () {
     var label = 'my label';
-    var todo = new Todo(label);
+    var todo = new Todo({label: label});
     expect(todo.label).to.equal(label);
   })
 
@@ -41,12 +41,35 @@ describe('Todo', function () {
   })
 
   it('should emit an event setting new value of label', function () {
-    var todo = new Todo('a-label');
+    var todo = new Todo({label:'a-label'});
     var spy = sinon.spy();
     todo.on(Todo.UPDATED, spy);
     var anotherLabel = "another-label";
     todo.update(anotherLabel);
     expect(spy.calledWith(anotherLabel)).to.be.true;
+  })
+
+  it('should deserialize a todo', function () {
+    var options = {
+      id: 'any-id',
+      label:'my-label',
+      completed: true
+    }
+    var todo = new Todo(options);
+    var json = todo.toJSON();
+    expect(json).to.deep.equal(options);
+  })
+
+  it('should serialize a todo', function () {
+    var json = {
+      id: 'any-id',
+      label:'my-label',
+      completed: true
+    }
+    var todo = Todo.fromJSON(json);
+    expect(todo.id).to.equal(json.id);
+    expect(todo.label).to.equal(json.label);
+    expect(todo.completed).to.equal(json.completed);
   })
 
 });
